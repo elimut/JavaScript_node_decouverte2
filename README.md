@@ -14,7 +14,7 @@ Qd on fait du back et qu'on utilise une base de données.Il faut une connection 
 - npm i express-myconnection,
 - npm i mysql ->pour la bdd,
 - npm i nodemon,
-- "start": "nodemon app",
+- "start": "nodemon main",
 - npm start.
 
 Création dossier, moteur de template, interface, pas d'html, moteur d'interface.(IHM interface homme machine)
