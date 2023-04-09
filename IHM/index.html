@@ -1,34 +1,31 @@
 <!DOCTYPE html>
-<html lang="fr-FR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Node Back</title>
+    <title>Document</title>
 </head>
 <body>
-    <header>
-        <h1>Mon application ToDoList</h1>
-        <nav>
-            <ul>
-                <li><a href="/">Accueil</a></li>
-                <li><a href="apropos">A propos</a></li>
-            </ul>
-        </nav>
-    </header>
+    <%- include('./component/header') %>
     <section>
         <form action="">
-            <label for="Title">Titre</label>
+            <label for="Title"></label>
             <input type="text" id="Title" name="Title">
-            <label for="Decription">Description de la tâche</label>
-            <textarea name="Description" id="Description" cols="30" rows="10"></textarea>
-            <br>
+            <label for="description">Description de la tâche</label>
+            <textarea name="description" id="description" cols="30" rows="10"></textarea>
             <input type="submit" value="Enregistrer">
         </form>
+        <p>------------------------------------------------</p>
     </section>
-    <p>------------------------------------------------------------------</p>
     <section>
-        <h2>Liste des tâches</h2>
+        <h2>Liste des tâches :</h2>
+        <% data.map((el) => { %>
+            <div>
+            <h3><%= el.titre %></h3>
+            <p><%= el.description %></p>
+            </div>
+        <% }); %>
     </section>
 </body>
 </html>

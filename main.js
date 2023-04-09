@@ -1,23 +1,43 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = 8080;
+const mysql = require('mysql');
+const myConnection = require('express-myconnection');
+const optionBDD = {
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    port: 3306,
+    database: 'todolist'
+};
 
-// Déclaration ressources statiques:
-app.use(express.static("public"));
+app.use(myConnection(mysql, optionBDD, 'pool'));
+app.use(express.static('public'));
+app.set('views', './IHM');
+app.set('view engine', 'ejs');
 
 app.get('/', (req, res)=>{
-    res.status(200).sendFile('/IHM/index.html', {root__dirname});
+    req.getConnection((error, connection)=>{
+      if (error) {
+        console.error(error);
+      } else {
+        connection.query('SELECT * FROM liste', [], (error, data)=>{
+          if (error) {
+            console.error(error);
+          } else {
+            res.status(200).render('index', {data})
+          }
+        })
+      }
+    })
 });
-app.get('/a-propos', (req, res)=>{
-    res.status(200).sendFile('/IHM/apropos.html', {root__dirname});
-});
-app.get('/a-propos', (req, res)=>{
-    res.status(200).sendFile('/IHM/apropos.html', {root__dirname});
-});
-app.use((res, res)=>{
-    res.status(404).sendFile('/IHM/404.html', {root__dirname});
-});
+app.get('/a-propos', (req, res) => {
+    res.status(200).render('apropos');
+})
+app.use((req, res) => {
+    res.status(404).render('404');
+})
 
-app.listen(port, ()=>{
-    console.log("server listening on port" + port);
+app.listen(port, () =>{
+    console.log("Server listening on port " + port);
 });
